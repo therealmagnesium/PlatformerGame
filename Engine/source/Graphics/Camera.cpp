@@ -1,4 +1,6 @@
 #include "Graphics/Camera.h"
+#include "Core/Base.h"
+#include "Core/Log.h"
 #include "Core/Math.h"
 #include "Graphics/Window.h"
 #include "Core/Application.h"
@@ -95,8 +97,8 @@ namespace Engine
     void Camera::DebugControls()
     {
         sf::Vector2f inputAxis;
-        inputAxis.x = Input::GetAxis("Horizontal");
-        inputAxis.y = Input::GetAxis("Vertical");
+        inputAxis.x = Input::GetAxis("Horizontal", true);
+        inputAxis.y = Input::GetAxis("Vertical", true);
         Normalize(inputAxis);
 
         m_view.move(m_panSpeed * inputAxis * Time::deltaTime);

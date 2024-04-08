@@ -1,9 +1,11 @@
 #pragma once
-#include "Scene/Player.h"
 #include <Core/Application.h>
+
 #include <Graphics/Camera.h>
 #include <Graphics/Window.h>
+
 #include <Scene/Level.h>
+#include <Scene/Player.h>
 
 using namespace Engine;
 

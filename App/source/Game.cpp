@@ -18,15 +18,16 @@
 
 static Application* app = NULL;
 
-static std::string levelData = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+static std::string levelData = "x................................................x"
                                "x................................................x"
                                "x................................................x"
                                "x................................................x"
-                               "x.................xxxxx..........................x"
+                               "x................................................x"
+                               "x..............xxxxx.............................x"
                                "x................................................x"
                                "x......xxxxx.....................................x"
-                               "x................................................x"
-                               "x................................................x"
+                               "x.xx.............................................x"
+                               "x..x.............................................x"
                                "x................................................x"
                                "xxxxxxxxxxxxxxxxxxxxxxxxxxxxooooooooxxxxxxxxxxxxxx"
                                "xxxxxxxxxxxxxxxxxxxxxxxxxxxxooooooooxxxxxxxxxxxxxx"
@@ -38,10 +39,10 @@ Game::Game(const AppInfo& info) : Application(info)
     app = Application::Get();
 
     m_player.SetLevelHandle(&m_level);
-    m_player.GetShape().setPosition(963.f, 370.f);
+    m_player.SetPosition(1000.f, 370.f);
 
     LevelData data;
-    data.numRows = 14;
+    data.numRows = 15;
     data.numCols = 50;
     data.map = levelData;
     m_level.Load(data);
@@ -54,11 +55,13 @@ Game::Game(const AppInfo& info) : Application(info)
 
 void Game::OnUpdate()
 {
-    if (Input::IsKeyTyped(sf::Keyboard::C))
-        m_camera.LogPosition();
-
     if (!app->DebugEnabled())
         m_player.Update();
+    else
+    {
+        if (Input::IsKeyTyped(sf::Keyboard::X))
+            m_camera.LogPosition();
+    }
 
     m_camera.SetTarget(m_player.GetShape().getPosition());
 }

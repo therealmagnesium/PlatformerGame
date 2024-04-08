@@ -31,6 +31,8 @@ namespace Engine
     public:
         Camera();
 
+        inline sf::View& GetView() { return m_view; }
+
         inline void SetType(CameraType type) { m_type = type; }
         inline void SetPanSpeed(float speed) { m_panSpeed = speed; }
         inline void SetTarget(const sf::Vector2f& target) { m_target = target; }

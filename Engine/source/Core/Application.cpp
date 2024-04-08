@@ -15,9 +15,7 @@ namespace Engine
         s_instance = this;
 
         m_window.Create(info);
-
         m_mainCamera = &defaultCamera;
-        Renderer::Init(&m_window, m_mainCamera);
     }
 
     void Application::Run()
@@ -32,7 +30,7 @@ namespace Engine
 
             if (Input::IsKeyDown(sf::Keyboard::LShift))
             {
-                if (Input::IsKeyTyped(sf::Keyboard::D))
+                if (Input::IsKeyTyped(sf::Keyboard::C))
                     this->ToggleDebug();
             }
 

@@ -1,35 +1,46 @@
 #include "Graphics/Renderer.h"
+#include "Core/Application.h"
+#include "Core/Base.h"
+#include "Core/Log.h"
+#include "Core/Math.h"
+#include "Graphics/Camera.h"
 
+#include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include <SFML/Graphics/Shape.hpp>
+#include <SFML/System/Vector2.hpp>
 #include <assert.h>
 
 namespace Engine
 {
-    Window* Renderer::s_window = NULL;
-    Camera* Renderer::s_camera = NULL;
+    static Application* app = NULL;
 
-    void Renderer::Init(Window* window, Camera* camera)
+    void Renderer::Draw(sf::Shape& drawable)
     {
-        assert(window);
-        assert(camera);
+        app = Application::Get();
+        assert(app);
 
-        s_window = window;
-        s_camera = camera;
-    }
+        sf::RenderWindow* nativeWindow = app->GetWindow()->GetHandle();
+        Camera* camera = app->GetCamera();
 
-    void Renderer::Draw(sf::Drawable& drawable)
-    {
-        assert(s_window);
-        sf::RenderWindow* nativeWindow = s_window->GetHandle();
-        nativeWindow->draw(drawable);
+        sf::FloatRect cameraArea;
+        cameraArea.width = camera->GetView().getSize().x;
+        cameraArea.height = camera->GetView().getSize().y;
+        cameraArea.left = camera->GetView().getCenter().x - cameraArea.width / 2.f;
+        cameraArea.top = camera->GetView().getCenter().y - cameraArea.height / 2.f;
+
+        if (CheckAABB(cameraArea, drawable.getGlobalBounds()))
+            nativeWindow->draw(drawable);
     }
 
     void Renderer::Display()
     {
-        assert(s_window);
-        sf::RenderWindow* nativeWindow = s_window->GetHandle();
+        app = Application::Get();
+        assert(app);
+
+        sf::RenderWindow* nativeWindow = app->GetWindow()->GetHandle();
         nativeWindow->display();
     }
 }
