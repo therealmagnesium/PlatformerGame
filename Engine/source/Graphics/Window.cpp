@@ -3,6 +3,8 @@
 #include "Core/Input.h"
 #include "Core/Math.h"
 #include "Core/Log.h"
+#include "SFML/System/Vector2.hpp"
+#include "SFML/Window/WindowStyle.hpp"
 
 #include <SFML/Window/Event.hpp>
 
@@ -10,7 +12,7 @@ namespace Engine
 {
     void Window::Create(const AppInfo& info)
     {
-        m_handle.create(sf::VideoMode(info.screenWidth, info.screenHeight), info.name);
+        m_handle.create(sf::VideoMode(info.screenWidth, info.screenHeight), info.name, sf::Style::Fullscreen);
 
         if (info.vsync)
             m_handle.setVerticalSyncEnabled(true);
@@ -54,6 +56,18 @@ namespace Engine
                     Input::keyTyped = false;
                     Input::keysDown[event.key.code] = false;
 
+                    break;
+                }
+
+                case sf::Event::Resized:
+                {
+                    sf::Vector2u newSize;
+                    newSize.x = event.size.width;
+                    newSize.y = event.size.height;
+
+                    m_handle.setSize(newSize);
+
+                    LOG_INFO("Window resized to %dx%d", newSize.x, newSize.y);
                     break;
                 }
 

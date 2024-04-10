@@ -57,14 +57,13 @@ PlayScene::PlayScene()
 
 void PlayScene::OnUpdate()
 {
-    if (!app->DebugEnabled())
-        m_player.Update();
-    else
+    if (app->DebugEnabled())
     {
         if (Input::IsKeyTyped(sf::Keyboard::X))
             m_camera.LogPosition();
     }
 
+    m_player.Update();
     m_camera.SetTarget(m_player.GetPosition());
 
     if (Input::IsKeyTyped(sf::Keyboard::E))

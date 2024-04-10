@@ -48,4 +48,31 @@ namespace Engine
 
         m_sprite->setTextureRect(rect);
     }
+
+    AnimationController::AnimationController() { m_animationIndex = "default"; }
+
+    void AnimationController::AddAnimation(Animation& animation, sf::Texture& texture)
+    {
+        m_animations[animation.GetName()] = &animation;
+        m_spriteSheets[animation.GetName()] = &texture;
+
+        assert(m_animations[animation.GetName()]);
+        assert(m_spriteSheets[animation.GetName()]);
+    }
+
+    void AnimationController::SwitchToAnim(const std::string& name)
+    {
+        m_animationIndex = name;
+
+        sf::Sprite* sprite = m_animations[m_animationIndex]->GetSprite();
+        const sf::Texture* texture = m_spriteSheets[m_animationIndex];
+
+        sprite->setTexture(*texture);
+    }
+
+    void AnimationController::Update()
+    {
+        Animation* animation = m_animations[m_animationIndex];
+        animation->Update();
+    }
 }

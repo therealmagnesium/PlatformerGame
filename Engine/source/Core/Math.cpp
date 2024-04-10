@@ -1,4 +1,7 @@
 #include "Core/Math.h"
+#include "Core/Base.h"
+#include "Core/Log.h"
+#include "SFML/Graphics/Sprite.hpp"
 #include <math.h>
 
 namespace Engine
@@ -29,6 +32,16 @@ namespace Engine
             Normalize(v);
             v *= limit;
         }
+    }
+
+    void CenterOrigin(sf::Sprite& sprite, u8 frameCount)
+    {
+        float xOffset = (sprite.getLocalBounds().width / 2.f) / frameCount;
+        float yOffset = sprite.getLocalBounds().height / 2.f;
+
+        LOG_INFO(V2_FMT, V2_OPEN(sf::Vector2f(xOffset, yOffset)));
+
+        sprite.setOrigin(xOffset, yOffset);
     }
 
     bool CheckAABB(sf::FloatRect a, sf::FloatRect b)

@@ -8,20 +8,21 @@ targetdir("../bin/" .. outputdir .. "/%{prj.name}")
 objdir("../build/" .. outputdir .. "/%{prj.name}")
 
 files({
-    "source/**.h",
-    "source/**.cpp",
+	"source/**.h",
+	"source/**.cpp",
 })
 
 includedirs({
-    "source",
+	"source",
+	"../vendor/sfml/include",
 })
 
 libdirs({})
 
 links({
-    "sfml-graphics",
-    "sfml-window",
-    "sfml-system",
+	"sfml-graphics",
+	"sfml-window",
+	"sfml-system",
 })
 
 filter("system:linux")
@@ -29,7 +30,7 @@ system("linux")
 cppdialect("C++17")
 systemversion("latest")
 defines({
-    "PLATFORM_LINUX",
+	"PLATFORM_LINUX",
 })
 
 filter({ "configurations:Debug" })
