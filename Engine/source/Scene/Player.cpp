@@ -1,4 +1,5 @@
 #include "Scene/Player.h"
+#include "Core/Base.h"
 #include "Core/Input.h"
 #include "Core/Log.h"
 #include "Core/Math.h"
@@ -6,6 +7,7 @@
 #include "Scene/Level.h"
 #include "Scene/Tile.h"
 
+#include <SFML/Graphics/Rect.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <cassert>
@@ -29,40 +31,27 @@ namespace Engine
 
     void Player::Update()
     {
-        sf::Vector2f inputAxis = this->HandleControls();
-        this->HandleMovement(inputAxis);
+        float direction = Input::GetAxis("Horizontal");
+        this->HandleMovement(direction);
     }
 
-    sf::Vector2f Player::HandleControls()
+    void Player::HandleMovement(float direction)
     {
-        sf::Vector2f inputAxis;
-        inputAxis.x = Input::GetAxis("Horizontal");
-        inputAxis.y = Input::GetAxis("Vertical");
-        Normalize(inputAxis);
-
-        return inputAxis;
-    }
-
-    void Player::HandleMovement(const sf::Vector2f& inputAxis)
-    {
-
         if (Input::IsKeyTyped(sf::Keyboard::Up) && m_isGrounded)
             this->Jump();
 
+        m_velocity.x = m_moveSpeed * direction;
         m_position.x += m_velocity.x * Time::deltaTime;
         this->HandleCollisions(m_velocity.x, 0.f);
-        m_velocity.x = m_moveSpeed * inputAxis.x;
 
+        m_velocity.y += GRAVITY * m_moveSpeed * Time::deltaTime;
         m_position.y += m_velocity.y * Time::deltaTime;
         this->HandleCollisions(0.f, m_velocity.y);
-        m_velocity.y += 25.f;
     }
 
     void Player::HandleCollisions(float xVel, float yVel)
     {
         assert(m_levelHandle);
-
-        m_shape.setPosition(m_position);
 
         LevelData& levelData = m_levelHandle->GetData();
         Tile* tiles = levelData.tiles.data();
@@ -73,7 +62,7 @@ namespace Engine
         {
             Tile& tile = tiles[i];
 
-            if (CheckAABB(m_shape.getGlobalBounds(), tile.GetShape().getGlobalBounds()))
+            if (CheckAABB(sf::FloatRect(m_position, m_shape.getSize()), tile.GetShape().getGlobalBounds()))
             {
                 if (xVel < 0)
                 {
@@ -105,5 +94,9 @@ namespace Engine
 
     void Player::Jump() { m_velocity.y = -1700.f; }
 
-    void Player::Draw() { Renderer::Draw(m_shape); }
+    void Player::Draw()
+    {
+        m_shape.setPosition(m_position);
+        Renderer::Draw(m_shape);
+    }
 }

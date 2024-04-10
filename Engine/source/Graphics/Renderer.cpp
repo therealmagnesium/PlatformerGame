@@ -10,6 +10,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include <SFML/Graphics/Shape.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <assert.h>
 
@@ -23,7 +24,25 @@ namespace Engine
         assert(app);
 
         sf::RenderWindow* nativeWindow = app->GetWindow()->GetHandle();
-        Camera* camera = app->GetCamera();
+        Camera* camera = app->GetCurrentScene()->GetMainCamera();
+
+        sf::FloatRect cameraArea;
+        cameraArea.width = camera->GetView().getSize().x;
+        cameraArea.height = camera->GetView().getSize().y;
+        cameraArea.left = camera->GetView().getCenter().x - cameraArea.width / 2.f;
+        cameraArea.top = camera->GetView().getCenter().y - cameraArea.height / 2.f;
+
+        if (CheckAABB(cameraArea, drawable.getGlobalBounds()))
+            nativeWindow->draw(drawable);
+    }
+
+    void Renderer::Draw(sf::Sprite& drawable)
+    {
+        app = Application::Get();
+        assert(app);
+
+        sf::RenderWindow* nativeWindow = app->GetWindow()->GetHandle();
+        Camera* camera = app->GetCurrentScene()->GetMainCamera();
 
         sf::FloatRect cameraArea;
         cameraArea.width = camera->GetView().getSize().x;

@@ -20,11 +20,12 @@ namespace Engine
     {
         m_panSpeed = 8.f;
         m_type = CameraType::Static;
-        m_zone = CameraZone(-400.f, 400.f);
+        m_zone = CameraZone(-250.f, 250.f);
+        m_zoneBox = CameraBox(-200.f, 200.f, -150.f, 150.f);
         m_target = sf::Vector2f(0.f, 0.f);
         m_clearColor = sf::Color::White;
 
-        m_view.setCenter(0.f, 0.f);
+        m_view.setCenter(m_target);
         m_view.setSize(1280.f, 720.f);
         m_view.setRotation(0.f);
     }
@@ -67,6 +68,41 @@ namespace Engine
                     m_view.setCenter(sf::Vector2f(newTarget.x, startY));
                     break;
                 };
+
+                case CameraType::ZoneWalls:
+                {
+                    static sf::Vector2f position = m_target;
+
+                    if (m_target.x < m_view.getCenter().x + m_zone.checkpointA)
+                        position.x -= m_panSpeed * Time::deltaTime;
+
+                    if (m_target.x > m_view.getCenter().x + m_zone.checkpointB)
+                        position.x += m_panSpeed * Time::deltaTime;
+
+                    m_view.setCenter(position);
+
+                    break;
+                }
+
+                case CameraType::ZoneBox:
+                {
+                    static sf::Vector2f position = m_target;
+
+                    if (m_target.x < m_view.getCenter().x + m_zoneBox.xAxisZone.checkpointA)
+                        position.x -= m_panSpeed * Time::deltaTime;
+
+                    if (m_target.x > m_view.getCenter().x + m_zoneBox.xAxisZone.checkpointB)
+                        position.x += m_panSpeed * Time::deltaTime;
+
+                    if (m_target.y < m_view.getCenter().y + m_zoneBox.yAxisZone.checkpointA)
+                        position.y -= m_panSpeed * Time::deltaTime;
+
+                    if (m_target.y > m_view.getCenter().y + m_zoneBox.yAxisZone.checkpointB)
+                        position.y += m_panSpeed * Time::deltaTime;
+
+                    m_view.setCenter(position);
+                    break;
+                }
 
                 default:
                     break;

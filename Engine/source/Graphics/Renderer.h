@@ -3,6 +3,7 @@
 #include "Graphics/Window.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Shape.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 
 namespace Engine
 {
@@ -10,6 +11,7 @@ namespace Engine
     {
     public:
         static void Draw(sf::Shape& drawable);
+        static void Draw(sf::Sprite& drawable);
         static void Display();
 
     private:

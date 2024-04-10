@@ -20,3 +20,5 @@ typedef uint64_t u64;
 #define VALUE_PTR(v) &v.x
 
 #define LEN(array) sizeof(array) / sizeof(array[0])
+
+#define GRAVITY 9.81f

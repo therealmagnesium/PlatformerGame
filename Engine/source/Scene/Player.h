@@ -13,6 +13,7 @@ namespace Engine
 
         inline sf::RectangleShape& GetShape() { return m_shape; }
 
+        inline sf::Vector2f& GetPosition() { return m_position; }
         inline void SetPosition(float x, float y) { m_position = sf::Vector2f(x, y); }
         inline void SetLevelHandle(Level* level) { m_levelHandle = level; }
 
@@ -21,9 +22,8 @@ namespace Engine
 
     private:
         void Jump();
-        void HandleMovement(const sf::Vector2f& inputAxis);
+        void HandleMovement(float direction);
         void HandleCollisions(float xVel, float yVel);
-        sf::Vector2f HandleControls();
 
     private:
         sf::Vector2f m_position;

@@ -1,9 +1,10 @@
 #pragma once
 #include "Core/Base.h"
-#include "Graphics/Camera.h"
 #include "Graphics/Window.h"
+#include "Scene/Scene.h"
 
 #include <string>
+#include <unordered_map>
 
 namespace Engine
 {
@@ -22,22 +23,21 @@ namespace Engine
     {
     public:
         Application(const AppInfo& info);
+        virtual ~Application();
 
         static inline Application* Get() { return s_instance; }
 
         inline bool DebugEnabled() { return m_debug; }
         inline AppInfo& GetInfo() { return m_info; }
-        inline Camera* GetCamera() { return m_mainCamera; }
         inline Window* GetWindow() { return &m_window; }
-
-        inline void SetMainCamera(Camera* camera) { m_mainCamera = camera; }
+        inline Scene* GetCurrentScene() { return m_scenes[m_sceneIndex]; }
 
         void Run();
         void ToggleDebug();
+        void SwitchToScene(const std::string& name, Scene* scene);
 
     protected:
         virtual void OnUpdate() = 0;
-        virtual void OnRender() = 0;
         virtual void OnRenderUI(){};
 
     private:
@@ -46,7 +46,9 @@ namespace Engine
 
         AppInfo m_info;
         Window m_window;
-        Camera* m_mainCamera;
+
+        std::string m_sceneIndex;
+        std::unordered_map<std::string, Scene*> m_scenes;
 
     private:
         static Application* s_instance;
