@@ -17,6 +17,7 @@ namespace Engine
         u32 screenHeight;
         u16 targetFPS;
         bool vsync = true;
+        bool fullscreen = false;
     };
 
     class Application

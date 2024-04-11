@@ -1,20 +1,29 @@
 #pragma once
+#include "Core/Math.h"
+#include "Graphics/Animation.h"
 #include "Scene/Level.h"
 
+#include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Vector2.hpp>
 
 namespace Engine
 {
+    enum PlayerAnims
+    {
+        PLAYER_IDLE = 0,
+        PLAYER_RUN,
+        PLAYER_ANIM_COUNT = 2,
+    };
+
     class Player
     {
     public:
         Player();
 
-        inline sf::RectangleShape& GetShape() { return m_shape; }
-
-        inline sf::Vector2f& GetPosition() { return m_position; }
-        inline void SetPosition(float x, float y) { m_position = sf::Vector2f(x, y); }
+        inline sf::Vector2f& GetPosition() { return m_transform.position; }
+        inline void SetPosition(float x, float y) { m_transform.position = sf::Vector2f(x, y); }
         inline void SetLevelHandle(Level* level) { m_levelHandle = level; }
 
         void Update();
@@ -22,16 +31,21 @@ namespace Engine
 
     private:
         void Jump();
-        void HandleMovement(float direction);
+        void HandleAnimation(s8 direction);
+        void HandleMovement(s8 direction);
         void HandleCollisions(float xVel, float yVel);
 
     private:
-        sf::Vector2f m_position;
-        sf::Vector2f m_velocity;
-
         float m_moveSpeed;
         bool m_isGrounded;
-        sf::RectangleShape m_shape;
+        Transform m_transform;
+        CollisionBox m_collisionBox;
+        sf::Vector2f m_velocity;
+
+        sf::Sprite m_sprite;
+        Animation m_animations[PLAYER_ANIM_COUNT];
+        AnimationController m_animController;
+
         Level* m_levelHandle;
     };
 }

@@ -11,7 +11,8 @@ int main(int argc, char* argv[])
     info.screenWidth = 1376;
     info.screenHeight = 768;
     info.targetFPS = 240;
-    info.vsync = true;
+    info.vsync = false;
+    info.fullscreen = true;
 
     Game game(info);
     game.Run();

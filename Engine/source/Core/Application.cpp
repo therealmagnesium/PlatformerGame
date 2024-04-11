@@ -91,9 +91,6 @@ namespace Engine
         m_scenes[name] = scene;
         m_sceneIndex = name;
 
-        LOG_INFO("%s -> %s", prevIndex.c_str(), m_sceneIndex.c_str());
-        LOG_INFO("%p -> %p\n", m_scenes[prevIndex], m_scenes[m_sceneIndex]);
-
-        m_scenes.erase(m_scenes.find(prevIndex));
+        LOG_INFO("Switched from scene %s -> %s", prevIndex.c_str(), m_sceneIndex.c_str());
     }
 }

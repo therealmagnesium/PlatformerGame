@@ -40,7 +40,7 @@ PlayScene::PlayScene()
     app = Application::Get();
 
     m_player.SetLevelHandle(&m_level);
-    m_player.SetPosition(1000.f, 370.f);
+    m_player.SetPosition(1000.f, 0.f);
 
     LevelData data;
     data.numRows = 15;
@@ -72,6 +72,6 @@ void PlayScene::OnUpdate()
 
 void PlayScene::OnRender()
 {
-    m_player.Draw();
     m_level.Draw();
+    m_player.Draw();
 }

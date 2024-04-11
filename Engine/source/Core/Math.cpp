@@ -39,8 +39,6 @@ namespace Engine
         float xOffset = (sprite.getLocalBounds().width / 2.f) / frameCount;
         float yOffset = sprite.getLocalBounds().height / 2.f;
 
-        LOG_INFO(V2_FMT, V2_OPEN(sf::Vector2f(xOffset, yOffset)));
-
         sprite.setOrigin(xOffset, yOffset);
     }
 

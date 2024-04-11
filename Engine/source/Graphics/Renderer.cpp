@@ -5,7 +5,9 @@
 #include "Core/Math.h"
 #include "Graphics/Camera.h"
 
+#include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
@@ -49,6 +51,31 @@ namespace Engine
         cameraArea.height = camera->GetView().getSize().y;
         cameraArea.left = camera->GetView().getCenter().x - cameraArea.width / 2.f;
         cameraArea.top = camera->GetView().getCenter().y - cameraArea.height / 2.f;
+
+        if (CheckAABB(cameraArea, drawable.getGlobalBounds()))
+            nativeWindow->draw(drawable);
+    }
+
+    void Renderer::Draw(sf::FloatRect& rect, const sf::Color& color)
+    {
+        app = Application::Get();
+        assert(app);
+
+        sf::RenderWindow* nativeWindow = app->GetWindow()->GetHandle();
+        Camera* camera = app->GetCurrentScene()->GetMainCamera();
+
+        sf::FloatRect cameraArea;
+        cameraArea.width = camera->GetView().getSize().x;
+        cameraArea.height = camera->GetView().getSize().y;
+        cameraArea.left = camera->GetView().getCenter().x - cameraArea.width / 2.f;
+        cameraArea.top = camera->GetView().getCenter().y - cameraArea.height / 2.f;
+
+        sf::RectangleShape drawable;
+        drawable.setPosition(rect.left, rect.top);
+        drawable.setSize(sf::Vector2f(rect.width, rect.height));
+        drawable.setFillColor(sf::Color::Transparent);
+        drawable.setOutlineColor(color);
+        drawable.setOutlineThickness(6.f);
 
         if (CheckAABB(cameraArea, drawable.getGlobalBounds()))
             nativeWindow->draw(drawable);

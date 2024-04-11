@@ -7,12 +7,19 @@
 #include "SFML/Window/WindowStyle.hpp"
 
 #include <SFML/Window/Event.hpp>
+#include <SFML/Window/VideoMode.hpp>
 
 namespace Engine
 {
     void Window::Create(const AppInfo& info)
     {
-        m_handle.create(sf::VideoMode(info.screenWidth, info.screenHeight), info.name, sf::Style::Fullscreen);
+        u32 style = sf::Style::Default;
+        sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
+
+        if (info.fullscreen)
+            style = sf::Style::Fullscreen;
+
+        m_handle.create(desktop, info.name, style);
 
         if (info.vsync)
             m_handle.setVerticalSyncEnabled(true);
