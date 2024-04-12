@@ -1,5 +1,6 @@
 #include "Scene/Player.h"
 #include "Core/Application.h"
+#include "Core/AssetManager.h"
 #include "Core/Base.h"
 #include "Core/Input.h"
 #include "Core/Log.h"
@@ -19,13 +20,13 @@
 
 namespace Engine
 {
-    static sf::Texture idleTexture;
-    static sf::Texture runTexture;
     static Application* app;
+    static AssetManager* assets;
 
     Player::Player()
     {
         app = Application::Get();
+        assets = AssetManager::Get();
 
         m_transform.position = sf::Vector2f(0.f, 0.f);
         m_transform.scale = sf::Vector2f(3.f, 3.f);
@@ -37,17 +38,14 @@ namespace Engine
         m_moveSpeed = 700.f;
         m_isGrounded = false;
 
-        idleTexture.loadFromFile("assets/textures/player/idle.png");
-        runTexture.loadFromFile("assets/textures/player/run.png");
-
-        m_sprite.setTexture(idleTexture);
+        m_sprite.setTexture(assets->GetTexture("playerIdle"));
         m_sprite.setOrigin(16.f, 16.f);
 
         m_animations[PLAYER_IDLE] = Animation("idle", m_sprite, 11, 0.05f);
         m_animations[PLAYER_RUN] = Animation("run", m_sprite, 12, 0.04f);
 
-        m_animController.AddAnimation(m_animations[PLAYER_IDLE], idleTexture);
-        m_animController.AddAnimation(m_animations[PLAYER_RUN], runTexture);
+        m_animController.AddAnimation(m_animations[PLAYER_IDLE], assets->GetTexture("playerIdle"));
+        m_animController.AddAnimation(m_animations[PLAYER_RUN], assets->GetTexture("playerRun"));
         m_animController.SwitchToAnim("idle");
     }
 

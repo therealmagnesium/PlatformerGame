@@ -1,4 +1,5 @@
 #pragma once
+#include "Core/AssetManager.h"
 #include "Core/Base.h"
 #include "Graphics/Window.h"
 #include "Scene/Scene.h"
@@ -50,6 +51,8 @@ namespace Engine
 
         std::string m_sceneIndex;
         std::unordered_map<std::string, Scene*> m_scenes;
+
+        AssetManager m_assetManager;
 
     private:
         static Application* s_instance;

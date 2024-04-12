@@ -1,4 +1,6 @@
 #include "TestbedScene.h"
+#include "Core/AssetManager.h"
+#include "Core/Log.h"
 #include "Graphics/Renderer.h"
 #include "PlayScene.h"
 
@@ -9,32 +11,33 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Keyboard.hpp>
+#include <cassert>
 #include <cstdlib>
 
 using namespace Engine;
 
-static Application* app = NULL;
+static Application* app;
+static AssetManager* assets;
 static sf::Vector2f position;
 static sf::Vector2f scale;
 
 Testbed::Testbed()
 {
     app = Application::Get();
+    assets = AssetManager::Get();
+    assert(assets);
 
     position = sf::Vector2f(0.f, 0.f);
     scale = sf::Vector2f(3.f, 3.f);
 
-    m_idleTexture.loadFromFile("assets/textures/player/idle.png");
-    m_runTexture.loadFromFile("assets/textures/player/run.png");
-
-    m_sprite.setTexture(m_idleTexture);
+    m_sprite.setTexture(assets->GetTexture("playerIdle"));
     CenterOrigin(m_sprite, 11);
 
     m_animations[0] = Animation("idle", m_sprite, 11, 0.05f);
     m_animations[1] = Animation("run", m_sprite, 12, 0.04f);
 
-    m_animController.AddAnimation(m_animations[0], m_idleTexture);
-    m_animController.AddAnimation(m_animations[1], m_runTexture);
+    m_animController.AddAnimation(m_animations[0], assets->GetTexture("playerIdle"));
+    m_animController.AddAnimation(m_animations[1], assets->GetTexture("playerRun"));
     m_animController.SwitchToAnim("idle");
 }
 

@@ -48,7 +48,7 @@ PlayScene::PlayScene()
     data.map = levelData;
     m_level.Load(data);
 
-    m_camera.SetType(CameraType::ZoneBox);
+    m_camera.SetType(CameraType::PositionLock);
     m_camera.SetClearColor(sf::Color::Black);
     m_camera.SetPanSpeed(700.f);
     m_camera.SetTarget(m_player.GetPosition());

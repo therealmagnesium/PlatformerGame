@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
     info.screenWidth = 1376;
     info.screenHeight = 768;
     info.targetFPS = 240;
-    info.vsync = false;
+    info.vsync = true;
     info.fullscreen = true;
 
     Game game(info);

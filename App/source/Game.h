@@ -17,6 +17,7 @@ public:
 private:
     void OnUpdate() override;
     void OnRenderUI() override;
+    void LoadAssets();
 
 private:
 };

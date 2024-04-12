@@ -15,8 +15,6 @@ public:
     void OnRender() override;
 
 private:
-    sf::Texture m_idleTexture;
-    sf::Texture m_runTexture;
     sf::Sprite m_sprite;
 
     Animation m_animations[2];

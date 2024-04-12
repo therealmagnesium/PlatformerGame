@@ -1,4 +1,5 @@
 #include "Core/Application.h"
+#include "Core/AssetManager.h"
 #include "Core/Input.h"
 #include "Core/Log.h"
 #include "Graphics/Camera.h"
@@ -7,15 +8,14 @@
 
 #include <SFML/Window/Keyboard.hpp>
 #include <cassert>
-#include <cstddef>
 
 namespace Engine
 {
-    Application* Application::s_instance = NULL;
+    Application* Application::s_instance;
 
     static Camera defaultCamera;
-    static Scene* currentScene = NULL;
-    static Camera* sceneCamera = NULL;
+    static Scene* currentScene;
+    static Camera* sceneCamera;
 
     Application::Application(const AppInfo& info) : m_info(info)
     {
@@ -29,6 +29,8 @@ namespace Engine
     {
         for (auto [name, scene] : m_scenes)
             delete scene;
+
+        m_assetManager.Clean();
     }
 
     void Application::Run()
