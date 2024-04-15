@@ -1,4 +1,5 @@
 #pragma once
+#include "Graphics/Camera.h"
 #include <Graphics/Animation.h>
 #include <Scene/Scene.h>
 #include <Scene/Tilemap.h>
@@ -22,5 +23,7 @@ private:
     Animation m_animations[2];
     AnimationController m_animController;
 
-    // Tilemap m_tilemap;
+    Camera m_camera;
+
+    Tilemap m_tilemap;
 };

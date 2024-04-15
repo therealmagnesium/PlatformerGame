@@ -1,7 +1,10 @@
 #include "Core/Math.h"
+#include "Core/Application.h"
 #include "Core/Base.h"
 #include "Core/Log.h"
+#include "SFML/Graphics/RenderWindow.hpp"
 #include "SFML/Graphics/Sprite.hpp"
+#include "SFML/System/Vector2.hpp"
 #include <math.h>
 
 namespace Engine
@@ -50,5 +53,16 @@ namespace Engine
         bool checkFromBottom = a.top < b.top + b.height;
 
         return checkFromLeft && checkFromRight && checkFromTop && checkFromBottom;
+    }
+
+    sf::Vector2i MapWorldToScreenCoords(sf::Vector2u& coord)
+    {
+        sf::Vector2i newCoord;
+        sf::RenderWindow* nativeWindow = Application::Get()->GetWindow()->GetHandle();
+
+        newCoord.x = coord.x - nativeWindow->getSize().x / 2;
+        newCoord.y = coord.y - nativeWindow->getSize().y / 2;
+
+        return newCoord;
     }
 }

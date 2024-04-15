@@ -4,73 +4,59 @@
 #include "Core/Log.h"
 #include "Graphics/Renderer.h"
 #include "PlayScene.h"
+#include "Scene/Tile.h"
 
 #include <Core/Application.h>
 #include <Core/Input.h>
 #include <Core/Math.h>
 
+#include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Mouse.hpp>
 #include <cassert>
-#include <cstdlib>
 
 using namespace Engine;
 
 static Application* app;
 static AssetManager* assets;
-static sf::Vector2f position;
-static sf::Vector2f scale;
+static sf::FloatRect rect;
 
 Testbed::Testbed()
 {
     app = Application::Get();
     assets = AssetManager::Get();
+
+    assert(app);
     assert(assets);
 
-    position = sf::Vector2f(0.f, 0.f);
-    scale = sf::Vector2f(3.f, 3.f);
-
-    m_sprite.setTexture(assets->GetTexture("playerIdle"));
-    CenterOrigin(m_sprite, 11);
-
-    m_animations[0] = Animation("idle", m_sprite, 11, 0.05f);
-    m_animations[1] = Animation("run", m_sprite, 12, 0.04f);
-
-    m_animController.AddAnimation(m_animations[0], assets->GetTexture("playerIdle"));
-    m_animController.AddAnimation(m_animations[1], assets->GetTexture("playerRun"));
-    m_animController.SwitchToAnim("idle");
+    m_camera.SetType(CameraType::Static);
+    m_camera.SetClearColor(sf::Color::Black);
+    m_camera.SetPanSpeed(700.f);
+    this->SetMainCamera(&m_camera);
 }
 
 void Testbed::OnUpdate()
 {
-    if (Input::IsKeyTyped(sf::Keyboard::E))
-        app->SwitchToScene("Play", new PlayScene());
+    sf::Vector2i rectToScreen = MapWorldToScreenCoords(Input::GetMousePosition());
 
-    s8 direction = Input::GetAxis("Horizontal");
-
-    if (abs(direction) > 0)
-    {
-        m_animController.SwitchToAnim("run");
-        scale.x = direction * 3.f;
-    }
-    else
-    {
-        m_animController.SwitchToAnim("idle");
-    }
-
-    m_animController.Update();
+    rect.left = rectToScreen.x;
+    rect.top = rectToScreen.y;
+    rect.width = TILE_SIZE;
+    rect.height = TILE_SIZE;
 
     if (Input::IsMouseClicked(sf::Mouse::Left))
     {
+        sf::Vector2i clickPosition = MapWorldToScreenCoords(Input::GetMousePosition());
+        m_tilemap.AddTile(clickPosition.x / TILE_SIZE, clickPosition.y / TILE_SIZE);
     }
-    LOG_INFO("%d", Input::mouseClicked);
 }
 
 void Testbed::OnRender()
 {
-    m_sprite.setPosition(position);
-    m_sprite.setScale(scale);
+    m_tilemap.Draw();
+
+    Renderer::Draw(rect, sf::Color::Green);
     Renderer::Draw(m_sprite);
 }

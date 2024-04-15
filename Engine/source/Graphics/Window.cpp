@@ -36,6 +36,7 @@ namespace Engine
         Time::FPS = 1.f / Time::deltaTime;
 
         Input::keyTyped = false;
+        Input::mouseClicked = false;
 
         sf::Event event;
         while (m_handle.pollEvent(event))
@@ -76,11 +77,10 @@ namespace Engine
 
                 case sf::Event::MouseButtonPressed:
                 {
-                    bool buttonCheck = Input::mouseButtonsDown[event.mouseButton.button];
-                    LOG_INFO("%d", buttonCheck);
-                    Input::mouseClicked = (buttonCheck) ? false : true;
-                    Input::mouseButtonsDown[event.mouseButton.button] = true;
+                    if (!Input::mouseClicked)
+                        Input::mouseClicked = true;
 
+                    Input::mouseButtonsDown[event.mouseButton.button] = true;
                     break;
                 }
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "Core/Base.h"
+
 #include <SFML/Graphics/Texture.hpp>
 #include <string>
 #include <unordered_map>

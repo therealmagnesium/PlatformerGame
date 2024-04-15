@@ -34,4 +34,5 @@ namespace Engine
     void LimitMagnitude(sf::Vector2f& v, float limit);
     void CenterOrigin(sf::Sprite& sprite, u8 frameCount = 1);
     bool CheckAABB(sf::FloatRect a, sf::FloatRect b);
+    sf::Vector2i MapWorldToScreenCoords(sf::Vector2u& coord);
 }

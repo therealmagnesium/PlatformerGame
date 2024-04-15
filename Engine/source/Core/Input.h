@@ -17,6 +17,7 @@ namespace Engine
 
         static bool IsMouseDown(sf::Mouse::Button button);
         static bool IsMouseClicked(sf::Mouse::Button button);
+        static sf::Vector2u& GetMousePosition();
 
     public:
         static bool keyTyped;

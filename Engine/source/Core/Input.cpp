@@ -16,8 +16,10 @@ namespace Engine
 
     bool Input::IsKeyDown(sf::Keyboard::Key key) { return keysDown[key]; }
     bool Input::IsKeyTyped(sf::Keyboard::Key key) { return keysDown[key] && keyTyped; }
+
     bool Input::IsMouseDown(sf::Mouse::Button button) { return mouseButtonsDown[button]; }
     bool Input::IsMouseClicked(sf::Mouse::Button button) { return mouseButtonsDown[button] && mouseClicked; }
+    sf::Vector2u& Input::GetMousePosition() { return mousePosition; }
 
     s8 Input::GetAxis(const std::string& axis, bool alt)
     {

@@ -13,7 +13,7 @@ namespace Engine
     public:
         static void Draw(sf::Shape& drawable);
         static void Draw(sf::Sprite& drawable);
-        static void Draw(sf::FloatRect& rect, const sf::Color& color);
+        static void Draw(sf::FloatRect& rect, const sf::Color& color, bool filled = false);
         static void Display();
 
     private:

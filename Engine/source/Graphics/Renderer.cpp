@@ -56,7 +56,7 @@ namespace Engine
             nativeWindow->draw(drawable);
     }
 
-    void Renderer::Draw(sf::FloatRect& rect, const sf::Color& color)
+    void Renderer::Draw(sf::FloatRect& rect, const sf::Color& color, bool filled)
     {
         app = Application::Get();
         assert(app);
@@ -73,9 +73,19 @@ namespace Engine
         sf::RectangleShape drawable;
         drawable.setPosition(rect.left, rect.top);
         drawable.setSize(sf::Vector2f(rect.width, rect.height));
-        drawable.setFillColor(sf::Color::Transparent);
-        drawable.setOutlineColor(color);
-        drawable.setOutlineThickness(6.f);
+
+        if (!filled)
+        {
+            drawable.setFillColor(sf::Color::Transparent);
+            drawable.setOutlineColor(color);
+            drawable.setOutlineThickness(6.f);
+        }
+        else
+        {
+            drawable.setFillColor(color);
+            drawable.setOutlineColor(color);
+            drawable.setOutlineThickness(6.f);
+        }
 
         if (CheckAABB(cameraArea, drawable.getGlobalBounds()))
             nativeWindow->draw(drawable);
