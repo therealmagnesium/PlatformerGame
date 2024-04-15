@@ -8,11 +8,11 @@ int main(int argc, char* argv[])
     info.name = "Platformer!";
     info.author = "Magnus Ahlstromer V";
     info.version = 0.1;
-    info.screenWidth = 1376;
-    info.screenHeight = 768;
+    info.screenWidth = 1280;
+    info.screenHeight = 720;
     info.targetFPS = 240;
-    info.vsync = true;
-    info.fullscreen = true;
+    info.vsync = false;
+    info.fullscreen = false;
 
     Game game(info);
     game.Run();

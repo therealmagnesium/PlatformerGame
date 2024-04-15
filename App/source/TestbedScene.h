@@ -1,6 +1,8 @@
 #pragma once
 #include <Graphics/Animation.h>
 #include <Scene/Scene.h>
+#include <Scene/Tilemap.h>
+
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
@@ -19,4 +21,6 @@ private:
 
     Animation m_animations[2];
     AnimationController m_animController;
+
+    // Tilemap m_tilemap;
 };

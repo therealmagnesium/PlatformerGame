@@ -14,6 +14,9 @@ typedef uint64_t u64;
 #define V2_FMT "<%.3f, %.3f>"
 #define V3_FMT "<%.3f, %.3f, %.3f>"
 
+#define V2I_FMT "<%d, %d>"
+#define V3I_FMT "<%d, %d, %d>"
+
 #define V2_OPEN(v) v.x, v.y
 #define V3_OPEN(v) v.x, v.y, v.z
 

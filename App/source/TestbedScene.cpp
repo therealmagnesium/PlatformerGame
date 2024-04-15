@@ -1,5 +1,6 @@
 #include "TestbedScene.h"
 #include "Core/AssetManager.h"
+#include "Core/Base.h"
 #include "Core/Log.h"
 #include "Graphics/Renderer.h"
 #include "PlayScene.h"
@@ -11,6 +12,7 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/Mouse.hpp>
 #include <cassert>
 #include <cstdlib>
 
@@ -59,6 +61,11 @@ void Testbed::OnUpdate()
     }
 
     m_animController.Update();
+
+    if (Input::IsMouseClicked(sf::Mouse::Left))
+    {
+    }
+    LOG_INFO("%d", Input::mouseClicked);
 }
 
 void Testbed::OnRender()

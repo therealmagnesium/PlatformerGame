@@ -2,6 +2,7 @@
 #include "Core/Log.h"
 
 #include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/Mouse.hpp>
 #include <string>
 
 namespace Engine
@@ -9,8 +10,14 @@ namespace Engine
     bool Input::keyTyped = false;
     bool Input::keysDown[sf::Keyboard::KeyCount]{0};
 
+    bool Input::mouseClicked = false;
+    bool Input::mouseButtonsDown[sf::Mouse::ButtonCount]{0};
+    sf::Vector2u Input::mousePosition;
+
     bool Input::IsKeyDown(sf::Keyboard::Key key) { return keysDown[key]; }
     bool Input::IsKeyTyped(sf::Keyboard::Key key) { return keysDown[key] && keyTyped; }
+    bool Input::IsMouseDown(sf::Mouse::Button button) { return mouseButtonsDown[button]; }
+    bool Input::IsMouseClicked(sf::Mouse::Button button) { return mouseButtonsDown[button] && mouseClicked; }
 
     s8 Input::GetAxis(const std::string& axis, bool alt)
     {

@@ -66,6 +66,32 @@ namespace Engine
                     break;
                 }
 
+                case sf::Event::MouseMoved:
+                {
+                    Input::mousePosition.x = event.mouseMove.x;
+                    Input::mousePosition.y = event.mouseMove.y;
+
+                    break;
+                }
+
+                case sf::Event::MouseButtonPressed:
+                {
+                    bool buttonCheck = Input::mouseButtonsDown[event.mouseButton.button];
+                    LOG_INFO("%d", buttonCheck);
+                    Input::mouseClicked = (buttonCheck) ? false : true;
+                    Input::mouseButtonsDown[event.mouseButton.button] = true;
+
+                    break;
+                }
+
+                case sf::Event::MouseButtonReleased:
+                {
+                    Input::mouseClicked = false;
+                    Input::mouseButtonsDown[event.mouseButton.button] = false;
+
+                    break;
+                }
+
                 case sf::Event::Resized:
                 {
                     sf::Vector2u newSize;
