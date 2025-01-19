@@ -76,7 +76,7 @@ void UpdatePlayer(Player& player, Tilemap& tilemap)
 
     if (player.isJumping && player.velocity.y == 0.f)
     {
-        player.velocity.y -= 40.f;
+        player.velocity.y -= 50.f;
         player.isJumping = false;
     }
     player.velocity.y += 3.f;

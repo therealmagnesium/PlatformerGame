@@ -54,7 +54,7 @@ namespace Core
 
             BeginDrawing();
             {
-                ClearBackground({15, 15, 25, 255});
+                ClearBackground({35, 85, 65, 255});
 
                 BeginMode2D(*m_primaryCamera);
                 this->OnRender();
